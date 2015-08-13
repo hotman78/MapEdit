@@ -25,8 +25,10 @@ class LayerSize{
     String c = text1.getText();
     String d = text2.getText();
     try{
-      layerSize.X =Integer.parseInt(c);layerSize.Y = Integer.parseInt(d);
-      }catch(NumberFormatException e){
+      X =Integer.parseInt(c);
+      Y = Integer.parseInt(d);
+    }catch(NumberFormatException e){
+    }catch(NullPointerException e){
     }
   }
 }
