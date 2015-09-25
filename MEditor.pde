@@ -117,4 +117,31 @@ class MEditor extends Box {
     
   }
   
+  String importImage(){
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    JFileChooser chooser = new JFileChooser("./");
+    JFrame frame=new JFrame();
+    chooser.setDialogTitle("画像をインポートする");
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "画像ファイル(*.png,*.jpeg,*.jpg)", "png","jpeg","jpg");
+    chooser.setFileFilter(filter);
+    int selected = chooser.showOpenDialog(frame);
+    if (selected == JFileChooser.APPROVE_OPTION){
+      File file = chooser.getSelectedFile();
+      println(file.getPath());
+      return file.getPath();
+    }else if (selected == JFileChooser.CANCEL_OPTION){
+      println("キャンセルされました");
+      return null;
+    }else if (selected == JFileChooser.ERROR_OPTION){
+      println("エラー又は取消しがありました");
+      return "null";
+    }
+    return null;
+
+  }
 }

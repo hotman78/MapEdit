@@ -41,18 +41,23 @@ class MapLayer extends Box {
     n++;
   }
   
-  void del_layer(LButton b) {
-    if (nl()<1 && !e.alert("delete ' "+b.get_ct()+" ' ?"))return ;
-    
-    if(ls.now > b.get_n())ls.now--;
-    for(int i=b.get_n()+1;i<nl();i++) {
-      lb.get(i).p.x -= b.s.x;
+  void del_layer() {
+    LButton button=null;
+    for(int i=0;i<lb.size();i++){
+      if(lb.get(i).selected())button=lb.get(i);
     }
-    bp.x -= b.s.x;
+    if(button==null)return;
+    if (nl()<=1 || !e.alert("delete ' "+button.get_ct()+" ' ?"))return ;
     
-    Layer l = b.l;
+    if(ls.now > button.get_n())ls.now--;
+    for(int i=button.get_n()+1;i<nl();i++) {
+      lb.get(i).p.x -= button.s.x;
+    }
+    bp.x -= button.s.x;
+    
+    Layer l = button.l;
     ls.ls.remove(l);
-    lb.remove(b);
+    lb.remove(button);
     
     //n--;
   }
@@ -469,11 +474,11 @@ class Layers extends ImgDisp {
     }
     
   }
-  
   void import_file() { // import
-    ml.add_layer();
-    get_layer(nl()-1).paint_pimg(loadImage("./data/o/layer.png"), new IVector(0, 0));
-    img.paint_pimg(loadImage("./data/o/mask.png"), new IVector(0, 0));
+    //ml.add_layer();
+    String Path=meditor.importImage();
+    if(Path!=null)get_layer(nl()-1).paint_pimg(loadImage(Path), new IVector(0, 0));
+    //img.paint_pimg(loadImage("./data/o/mask.png"), new IVector(0, 0));
   }
   
   void fill_layer() {
@@ -635,7 +640,7 @@ class LButton extends Box { // MapLayer_Button
   
   boolean key_release_event(int mx, int my) {
     if(!this.inside(mx, my))return false;
-    if(keyCode==BACKSPACE)ml.del_layer(this);
+    //if(keyCode==BACKSPACE)ml.del_layer(this);
     return true;
   }
   

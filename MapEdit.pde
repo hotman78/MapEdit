@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.filechooser.*;
 
 MEditor meditor;
 
@@ -7,7 +8,6 @@ void setup(){
   size(720, 500);
   
   meditor = new MEditor();
-  
 }
 
 void draw(){
